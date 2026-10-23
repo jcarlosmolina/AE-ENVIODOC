@@ -130,6 +130,31 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 
+import com.keralty.aeenviodoc.global.DominioConstants;
+import com.keralty.aeenviodoc.global.PlantillaReporteConstants;
+import com.keralty.aeenviodoc.global.ReportesDominioConstants;
+import com.keralty.aeenviodoc.repository.ReportesDominioJpaRepository;
+import com.keralty.aeenviodoc.sqlutils.SQLPopulation;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import com.keralty.aeenviodoc.reports.ReportGenerator;
+import com.keralty.aeenviodoc.persistence.PlantillaReporte;
+import com.keralty.aeenviodoc.viewmodel.solicitud.siu.TENVIARDOCRequest;
+
+import io.quarkus.arc.Arc;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.AesKeyStrength;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
+
 @Transactional
 @ApplicationScoped
 public class SolicitudService extends AbstractService {
@@ -218,6 +243,11 @@ public class SolicitudService extends AbstractService {
 
     UserFunctions userFunctionsSrv;
 
+    ReportGenerator reportGenerator;
+
+    @ConfigProperty(name="com.keralty.enviodoc.path-temporal", defaultValue = "" )
+    private String mountPathTemporal;
+    
     @Inject
     public SolicitudService(
             SolicitudService solicitudSrv,
@@ -261,7 +291,8 @@ public class SolicitudService extends AbstractService {
             PlantillaReporteService plantillaReporteSrv,
             RegionalService regionalSrv,
             UserFunctions userFunctionsSrv,
-            SolicitudJpaRepository repository) {
+            SolicitudJpaRepository repository,
+            ReportGenerator reportGenerator) {
         this.solicitudSrv = solicitudSrv;
         this.aesolicitudesSrv = aesolicitudesSrv;
         this.personaSrv = personaSrv;
@@ -304,6 +335,7 @@ public class SolicitudService extends AbstractService {
         this.regionalSrv = regionalSrv;
         this.userFunctionsSrv = userFunctionsSrv;
         this.repository = repository;
+        this.reportGenerator = reportGenerator;
     }
 
     public List<Map<String, Object>> solveQuery(QueryRequest request) {
@@ -11262,11 +11294,136 @@ public class SolicitudService extends AbstractService {
             /* Action 11: IF (oaPlantilla <> NULL) */
             boolean ifCondition11 = (response.getSolicitudTENVIARDOCoaPlantillaInstance() != null && !response.getSolicitudTENVIARDOCoaPlantillaInstance().isNull());
             if (ifCondition11) {
-                com.keralty.aeenviodoc.viewmodel.solicitud.siu.EnviarEmailDocumentacionRequest step110Request = new com.keralty.aeenviodoc.viewmodel.solicitud.siu.EnviarEmailDocumentacionRequest();
-                step110Request.setSolicitudenviarEmailDocumentacionpthisSolicitudInstance(solicitudTENVIARDOCpthisSolicitud);
-                step110Request.setSolicitudenviarEmailDocumentacionpfuRutaAdjunto("");
-                step110Request.setSolicitudenviarEmailDocumentacionpePlantillaInstance(response.getSolicitudTENVIARDOCoaPlantillaInstance());
-                solicitudSrv.enviarEmailDocumentacionImplementation(step110Request);
+            	// 1. Generamos los documentos que se requiera y los vamos guardando en disco
+            	
+            	// Utilizamoa el parámetro de configuración o la config property, en función de si estamos en Openshift o no
+            	String carpeta = this.mountPathTemporal;
+                if (carpeta == null || carpeta.isEmpty()) {
+                	org.slf4j.LoggerFactory.getLogger(getClass()).error("TENVIARDOC. PATH_CARPETATEMPORAL_REPORTS no encontrado'");
+            		throw new SystemException("1110: PATH_CARPETATEMPORAL_REPORTS no encontrado");
+                }
+                List<String> nombreFicheros = new ArrayList<>();
+
+                carpeta += "/" + instance.getSolicitudNumRadicado().toString();
+                // Creamos la carpeta
+                try {
+                	Files.createDirectories(Paths.get(carpeta));
+                } catch(IOException e) {
+                	org.slf4j.LoggerFactory.getLogger("SolicitudService").error("TENVIARDOC. Creando carpeta. '" + e.getMessage());
+                }
+                //Files.createDirectories(Paths.get(carpeta));
+
+
+                // Tipo 0 - 'Solicitud
+            	if (request.getSolicitudTENVIARDOCpSolicitud()) {
+            		generarReporte(0L, "Solicitud",  instance, carpeta, nombreFicheros);
+            	}
+            	
+                // Tipo 1 - 'Contrato
+            	if (request.getSolicitudTENVIARDOCpContrato()) {
+            		generarReporte(1L, "Contrato",  instance, carpeta, nombreFicheros);
+            	}
+
+                // Tipo 2 - 'Carnets
+            	if (request.getSolicitudTENVIARDOCpCarnets()) {
+            		generarReporte(2L, "Carnets",  instance, carpeta, nombreFicheros);
+            	}
+            	
+                // Tipo 3 - 'Carta preexistencias
+            	if (request.getSolicitudTENVIARDOCpCartaPre()) {
+            		generarReporte(3L, "Carta preexistencias",  instance, carpeta, nombreFicheros);
+            	}
+            	
+                // Tipo 4 - 'Carta entrevista mÃ©dica
+            	if (request.getSolicitudTENVIARDOCpCartaEntrevista()) {
+            		generarReporte(4L, "Carta entrevista médica",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 5 - 'ProtecciÃ³n de datos
+            	if (request.getSolicitudTENVIARDOCpProteccionDatos()) {
+            		generarReporte(5L, "Protección de datos",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 6 - 'Bebe Gestante
+            	if (request.getSolicitudTENVIARDOCpCondicionesBB()) {
+            		generarReporte(6L, "Bebe Gestante",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 7 - 'Anexo inclusiÃ³n
+            	if (request.getSolicitudTENVIARDOCpAnexosIncl()) {
+            		generarReporte(7L, "Anexo inclusión",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 8 - 'Maternidad
+            	if (request.getSolicitudTENVIARDOCpDocMaternidad()) {
+            		generarReporte(8L, "Maternidad",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 9 - 'Neonatal
+            	if (request.getSolicitudTENVIARDOCpDocNeonatal()) {
+            		generarReporte(9L, "Neonatal",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 10 - 'Cuestionario mÃ©dico
+            	if (request.getSolicitudTENVIARDOCpCuesMedico()) {
+            		generarReporte(10L, "Cuestionario médico",  instance, carpeta, nombreFicheros);
+            	}
+                // Tipo 11 - 'Diferencias de liquidaciÃ³n
+            	if (request.getSolicitudTENVIARDOCpDiferenciasLiq()) {
+            		generarReporte(11L, "Diferencias de liquidación",  instance, carpeta, nombreFicheros);
+            	}
+            	
+            	// ********************************************
+            	// 2. Comprimimos todos los documentos GdC-66
+            	// ********************************************
+            	
+            	// El password es el numero de identificacion del titular de la solicitud
+            	String passwordZip = instance.getTitularPersona() != null && !instance.getTitularPersona().isNull() ?
+            			instance.getTitularPersona().getPersonaNumIdentificacion() : 
+            				instance.getContratantePersona().getPersonaNumIdentificacion();
+            	String nombreFicheroZip = "Documentacion_" + instance.getSolicitudNumRadicado().toString() + ".zip";
+        		ZipParameters zipParameters = new ZipParameters();
+        		// Parametros de encriptacion
+        		zipParameters.setEncryptFiles(true);
+        		zipParameters.setEncryptionMethod(EncryptionMethod.AES);
+        		zipParameters.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_256); 
+
+        		ZipFile zipFile = new ZipFile(new File(carpeta, nombreFicheroZip), passwordZip.toCharArray());
+        		// Anyadimos los ficheros al Zip
+    			for (String fileName : nombreFicheros) {
+    				try {
+						zipFile.addFile(new File(carpeta, fileName),  zipParameters);
+					} catch (ZipException e) {
+	            		org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Creando ZIP. '" + e.getMessage());
+	            		throw new SystemException("1000: Error generando fichero");
+					}
+    			}
+    			try {
+					zipFile.close();
+				} catch (IOException e) {
+            		org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Cerrando ZIP. '" + e.getMessage());
+            		throw new SystemException("1010: Error generando fichero");
+				}
+
+            	
+            	// ********************************************
+            	// 3. Enviamos el correo
+            	// ********************************************
+                com.keralty.aeenviodoc.viewmodel.solicitud.siu.EnviarEmailDocumentacionRequest envioCorreoRequest = new com.keralty.aeenviodoc.viewmodel.solicitud.siu.EnviarEmailDocumentacionRequest();
+                envioCorreoRequest.setSolicitudenviarEmailDocumentacionpthisSolicitudInstance(solicitudTENVIARDOCpthisSolicitud);
+                envioCorreoRequest.setSolicitudenviarEmailDocumentacionpfuRutaAdjunto(carpeta + "/" + nombreFicheroZip);
+                envioCorreoRequest.setSolicitudenviarEmailDocumentacionpePlantillaInstance(response.getSolicitudTENVIARDOCoaPlantillaInstance());
+                solicitudSrv.enviarEmailDocumentacionImplementation(envioCorreoRequest);
+                
+            	// ********************************************
+                // 4. Borramos todos los archivos
+            	// ********************************************
+				try {
+					// Los reportes
+	    			for (String fileName : nombreFicheros) {
+						Files.delete(Paths.get(carpeta, fileName));
+	    			}
+	    			// El Zip
+	    			Files.delete(Paths.get(carpeta, nombreFicheroZip));
+	    			// La carpeta
+	    			Files.delete(Paths.get(carpeta));
+				} catch (IOException e) {
+		    		org.slf4j.LoggerFactory.getLogger("SolicitudService").error("Borrando ficheros. " + e.getMessage());
+				}
             }
         }
 
@@ -11274,6 +11431,48 @@ public class SolicitudService extends AbstractService {
         response.setInstanceSuppInfo(instance.buildICSolicitud());
 
         return response;
+    }
+
+    private void generarReporte(Long tipo, String tipoString,  Solicitud instance,  String carpeta, List<String> nombreFicheros) {
+		try {
+            // Datos de la peticion para recuperar la plantilla segun el tipo
+			com.keralty.aeenviodoc.viewmodel.solicitud.siu.TGETPLANTILLAREPORTERequest requestPlantilla = new com.keralty.aeenviodoc.viewmodel.solicitud.siu.TGETPLANTILLAREPORTERequest();
+			requestPlantilla.setSolicitudTGETPLANTILLAREPORTEpthisSolicitudInstance(instance);
+			requestPlantilla.setSolicitudTGETPLANTILLAREPORTEptTipo(tipo);
+            com.keralty.aeenviodoc.viewmodel.solicitud.siu.TGETPLANTILLAREPORTEResponse responsePlantilla = solicitudSrv.tGETPLANTILLAREPORTEImplementation(requestPlantilla);
+            
+            // Si no tenemos plantilla para el tipo, damos un error
+            if (responsePlantilla.getSolicitudTGETPLANTILLAREPORTEoaPlantillaInstance() == null ||
+            		responsePlantilla.getSolicitudTGETPLANTILLAREPORTEoaPlantillaInstance().isNull()) {
+        		throw new SystemException("100: Plantilla de " + tipoString + " no encontrada");
+            }
+
+            this.generarFicheroPlantilla(instance, 
+            		responsePlantilla.getSolicitudTGETPLANTILLAREPORTEoaPlantillaInstance().getPlantillaReporte(), 
+            		carpeta, nombreFicheros);
+    		
+		} catch(SystemException e) {
+    		org.slf4j.LoggerFactory.getLogger("SolicitudService").error("Generando PDF  "+ tipoString + ". " + e.getMessage());
+    		throw new SystemException("110: Generando PDF " + tipoString);
+		} catch (IOException e) {
+    		org.slf4j.LoggerFactory.getLogger("SolicitudService").error("Generando PDF  "+ tipoString + ". " + e.getMessage());
+    		throw new SystemException("120: Generando PDF " + tipoString);
+		}
+    	
+    }
+    private void generarFicheroPlantilla(Solicitud instance, PlantillaReporte plantillaReporte, String carpeta, List<String> nombreFicheros) throws IOException {
+        // Formamos la ruta completa de la plantilla
+        String rutaParcial = plantillaReporte.getPlantillaReporteRutaArchivos();
+        // Invocamos al generador de reportes
+        byte[] pdf = reportGenerator.generateReport(instance, rutaParcial);
+        
+        String nombreFichero = plantillaReporte.getPlantillaReporteNombreArchivoPDF() + ".pdf";
+        Path filePath = Paths.get(carpeta, nombreFichero);
+
+        nombreFicheros.add(nombreFichero);
+        
+		// Write the file to the temporary storage
+		Files.write(filePath, pdf);    	
     }
 
     // Service: TNOTIFICARANULACION
@@ -17463,16 +17662,152 @@ public class SolicitudService extends AbstractService {
         request.checkArguments();
         Solicitud instance = solicitudTENVIARDOCAUTOAUXpthisSolicitud;
 
-        /* Action 1: IF (1 > 2) */
-        boolean ifCondition1 = Long.valueOf(1) > Long.valueOf(2);
-        if (ifCondition1) {
-            com.keralty.aeenviodoc.viewmodel.solicitud.siu.TENVIARDOCAUTOAUXRequest step10Request = new com.keralty.aeenviodoc.viewmodel.solicitud.siu.TENVIARDOCAUTOAUXRequest();
-            step10Request.setSolicitudTENVIARDOCAUTOAUXpthisSolicitudInstance(solicitudTENVIARDOCAUTOAUXpthisSolicitud);
-            solicitudSrv.tENVIARDOCAUTOAUXImplementation(step10Request);
-        }
+        // Llamamos a TENVIARDOC indicándole los que se deben enviar
+        TENVIARDOCRequest reqEnviarDoc = new TENVIARDOCRequest();
+        reqEnviarDoc.setSolicitudTENVIARDOCpthisSolicitudInstance(instance);
+        reqEnviarDoc.setSolicitudTENVIARDOCpEnviar(true);
+        reqEnviarDoc.setSolicitudTENVIARDOCpPrevisualizar(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpAnexosIncl(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpCarnets(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpCartaEntrevista(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpCartaPre(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpCondicionesBB(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpContrato(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpCuesMedico(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpDiferenciasLiq(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpDocMaternidad(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpDocNeonatal(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpMarcarTodos(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpProteccionDatos(false);
+        reqEnviarDoc.setSolicitudTENVIARDOCpSolicitud(false);
+        
+	    // Recuperamos las plantillas del dominio que apliquen a la solicitud, llamando al filtro
+        SQLPopulation sql = new SQLPopulation(ReportesDominioConstants.CLASS_NAME);
+        SQLWhereConjunction conjunction = new SQLWhereConjunction();
+        Solicitud vfSolicitud = instance;
 
-        response.setInstance(getByOID(instance.getOid()));
-        response.setInstanceSuppInfo(instance.buildICSolicitud());
+        // Dominio.ProductoT = vfSolicitud.Aesolicitudes.ProductoT
+        if (vfSolicitud != null) {
+            // '=' Comparison
+            SQLWhereComparison comparison1 = new SQLWhereComparison(sql);
+            comparison1.setOperator("=");
+            
+            // Operand 1
+            SQLWhereOperandPathInstance operand112 = new SQLWhereOperandPathInstance(ReportesDominioConstants.ROLE_NAME_DOMINIO + "." + DominioConstants.ROLE_NAME_PRODUCTOT, ProductosConstants.CLASS_NAME);
+            comparison1.setFirstOperand(operand112);
+            
+            // Operand 2
+            if (vfSolicitud.isNull() || vfSolicitud.getAesolicitudes().getProductoT().isNull())
+            {
+            comparison1.setSecondOperand(new SQLWhereOperandNull());
+            }
+            else
+            {
+            SQLWhereOperandOVParameter operand223 = new SQLWhereOperandOVParameter(ReportesDominioConstants.VAR_NAME_FIPARASOLICITUD_VFSOLICITUD + "." + SolicitudConstants.ROLE_NAME_AESOLICITUDES + "." + AesolicitudesConstants.ROLE_NAME_PRODUCTOT, SolicitudConstants.CLASS_NAME, ProductosConstants.CLASS_NAME, vfSolicitud.getOid(), ReportesDominioConstants.VAR_NAME_FIPARASOLICITUD_VFSOLICITUD);
+            comparison1.setSecondOperand(operand223);
+            }
+            conjunction.addOperand(comparison1);
+
+        }        
+
+        // Dominio.PlanT = vfSolicitud.Aesolicitudes.PlanT
+        if (vfSolicitud != null) {
+            // '=' Comparison
+            SQLWhereComparison comparison2 = new SQLWhereComparison(sql);
+            comparison2.setOperator("=");
+            
+            // Operand 1
+            SQLWhereOperandPathInstance operand113 = new SQLWhereOperandPathInstance(ReportesDominioConstants.ROLE_NAME_DOMINIO + "." + DominioConstants.ROLE_NAME_PLANT, PlanesConstants.CLASS_NAME);
+            comparison2.setFirstOperand(operand113);
+            
+            // Operand 2
+            if (vfSolicitud.isNull() || vfSolicitud.getAesolicitudes().getPlanT().isNull())
+            {
+            comparison2.setSecondOperand(new SQLWhereOperandNull());
+            }
+            else
+            {
+            SQLWhereOperandOVParameter operand224 = new SQLWhereOperandOVParameter(ReportesDominioConstants.VAR_NAME_FIPARASOLICITUD_VFSOLICITUD + "." + SolicitudConstants.ROLE_NAME_AESOLICITUDES + "." + AesolicitudesConstants.ROLE_NAME_PLANT, SolicitudConstants.CLASS_NAME, PlanesConstants.CLASS_NAME, vfSolicitud.getOid(), ReportesDominioConstants.VAR_NAME_FIPARASOLICITUD_VFSOLICITUD);
+            comparison2.setSecondOperand(operand224);
+            }
+            conjunction.addOperand(comparison2);
+
+        }        
+
+        // vfSolicitud.Aesolicitudes.Fesolici >= PlantillaReporte.FechaVigencia
+        if (vfSolicitud != null) {
+            // '>=' Comparison
+            SQLWhereComparison comparison4 = new SQLWhereComparison(sql);
+            comparison4.setOperator(">=");
+            
+            // Operand 1
+            if (vfSolicitud.getAesolicitudes().getAesolicitudesFesolici()!= null){
+            comparison4.setFirstOperand(new SQLWhereOperandLiteral(vfSolicitud.getAesolicitudes().getAesolicitudesFesolici(), Constants.Type.DATE.getTypeName()));
+            } else {
+            comparison4.setFirstOperand(new SQLWhereOperandNull());
+            }
+            
+            // Operand 2
+            SQLWhereOperandPathAttribute operand226 = new SQLWhereOperandPathAttribute(ReportesDominioConstants.ROLE_NAME_PLANTILLAREPORTE + "." + PlantillaReporteConstants.ATTR_NAME_PLANTILLAREPORTEFECHAVIGENCIA, Constants.Type.DATE.getTypeName());
+            comparison4.setSecondOperand(operand226);
+            conjunction.addOperand(comparison4);
+
+        }        
+
+        sql.addConjunction(conjunction);        
+        List<ReportesDominio> listaReportesDominio = Arc.container().select(ReportesDominioJpaRepository.class).get().solveQuery(sql);
+        
+        // Marcamos los que tengan que ser enviados automáticamente, solo si aplica a la solicitud.
+    	for (ReportesDominio reportesDom : listaReportesDominio) {
+    		
+    		// Debe enviarse automáticamente y además tener la fecha hasta mayor que la de la solicitud
+    		if (reportesDom.getReportesDominioEnviarAuto() && 
+    				STDFunctions.dateBeforeFun(instance.getAesolicitudes().getAesolicitudesFesolici(),reportesDom.getReportesDominiodrvFechaHasta())) {
+    			
+				switch (reportesDom.getPlantillaReporte().getPlantillaReporteTipo().toString()){
+				case "0":
+					reqEnviarDoc.setSolicitudTENVIARDOCpSolicitud(instance.getSolicituddrvAplicaDocSolicitud());
+					break;
+				case "1":
+					reqEnviarDoc.setSolicitudTENVIARDOCpContrato(instance.getSolicituddrvAplicaDocContrato());
+					break;
+				case "2":
+					reqEnviarDoc.setSolicitudTENVIARDOCpCarnets(instance.getSolicituddrvAplicaCarnets());
+					break;
+				case "3":
+					reqEnviarDoc.setSolicitudTENVIARDOCpCartaPre(instance.getSolicituddrvAplicaDocCartaPree());
+					break;
+				case "4":
+					reqEnviarDoc.setSolicitudTENVIARDOCpCartaEntrevista(instance.getSolicituddrvAplicaCartaEnt());
+					break;
+				case "5":
+					reqEnviarDoc.setSolicitudTENVIARDOCpProteccionDatos(instance.getSolicituddrvAplicaDocProtDatos());
+					break;
+				case "6":
+					reqEnviarDoc.setSolicitudTENVIARDOCpCondicionesBB(instance.getSolicituddrvAplicaDocBBGestante());
+					break;
+				case "7":
+					reqEnviarDoc.setSolicitudTENVIARDOCpAnexosIncl(instance.getSolicitudTramite() == 2L);
+					break;
+				case "8":
+					reqEnviarDoc.setSolicitudTENVIARDOCpDocMaternidad(instance.getSolicituddrvAplicaDocMaternidad());
+					break;
+				case "9":
+					reqEnviarDoc.setSolicitudTENVIARDOCpDocNeonatal(instance.getSolicituddrvAplicaDocNeonatal());
+					break;
+				case "10":
+					reqEnviarDoc.setSolicitudTENVIARDOCpCuesMedico(instance.getSolicituddrvAplicaCuestionario());
+					break;
+				case "11":
+					reqEnviarDoc.setSolicitudTENVIARDOCpDiferenciasLiq(instance.getSolicitudTieneDifLiquidacion());
+					break;
+				default:
+					continue;
+				}            	        			
+    		}
+    	}
+    	
+    	solicitudSrv.tENVIARDOCImplementation(reqEnviarDoc);
 
         return response;
     }

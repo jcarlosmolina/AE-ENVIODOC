@@ -14,5 +14,5 @@ spec:
     app: ae-enviodoc
   ports:
     - protocol: TCP
-      port: 8089
-      targetPort: 8089
+      port: 8101
+      targetPort: 8101

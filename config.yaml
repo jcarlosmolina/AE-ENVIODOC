@@ -34,4 +34,4 @@ data:
   ae-generasolicitud-url: 'https://ae-generasolicitud:8088'
 # Use this configuration if microservice ae-enviodoc uses its own database
   ae-enviodoc-database-jdbc-url: 'jdbc:oracle:thin:@localhost:1521/ORCL'
-  ae-enviodoc-url: 'https://ae-enviodoc:8089'
+  ae-enviodoc-url: 'https://ae-enviodoc:8101'

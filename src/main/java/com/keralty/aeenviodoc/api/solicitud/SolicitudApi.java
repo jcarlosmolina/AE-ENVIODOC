@@ -110,11 +110,17 @@ import java.util.List;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
+import com.keralty.aeenviodoc.service.SolicitudItSelf;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
 @Path("/api/SolicitudApi")
 @RequestScoped
 public class SolicitudApi {
 
     SolicitudService service;
+
+    @RestClient
+    SolicitudItSelf solicitudItSelf;
 
     public SolicitudApi(SolicitudService service, JsonWebToken jwt) {
         this.service = service;
@@ -802,7 +808,19 @@ public class SolicitudApi {
     @Path(value = "/TENVIARDOCAUTOAUX")
     @RolesAllowed({"Funcionario","Admin","SuperAdmin","Asesor","AreaMedica","Afiliaciones","RespRegional","Gestor","MesaDeApoyo"})
     public ServiceResponse solicitudTENVIARDOCAUTOAUX(TENVIARDOCAUTOAUXRequest request) {
-        return service.tENVIARDOCAUTOAUX(request);
+
+    	// Llama a un REST que es él mismo, pero sin esperar respuesta
+    	solicitudItSelf.solicitudTENVIARDOCAUTOAUX_Async(request);
+    	
+    	// Devolvemos Ok 
+    	return new ServiceResponse();
+    }
+    
+    @POST
+    @Path(value = "/TENVIARDOCAUTOAUX_Async")
+    @RolesAllowed({"Funcionario","Admin","SuperAdmin","Asesor","AreaMedica","Afiliaciones","RespRegional","Gestor","MesaDeApoyo"})
+    public ServiceResponse solicitudTENVIARDOCAUTOAUX_Async(TENVIARDOCAUTOAUXRequest request) {
+    	return service.tENVIARDOCAUTOAUX(request);
     }
     
 

@@ -43,7 +43,7 @@ RUN if [ ! -d /build/target/quarkus-app ] ; then mkdir -p /build/target/quarkus-
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.16
 
 #Configure the JAVA_OPTS, you can add -XshowSettings:vm to also display the heap size.
-ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=8089 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=8101 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --from=0 --chown=1001 /build/target/quarkus-app/lib/ /deployments/lib/

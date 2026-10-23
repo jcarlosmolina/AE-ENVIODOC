@@ -24,9 +24,17 @@ spec:
       containers:
         - name: ae-enviodoc
 # Replace the placeholder below with the name of your OpenShift namespace/project
-          image: 'image-registry.openshift-image-registry.svc:5000/${YourNamespaceOrProjectNameHere}/ae-enviodoc:latest'
+#INIIMAGEN
+          image: 'image-registry.openshift-image-registry.svc:5000/soporte-colsanitas-dev/ae-enviodoc:latest'
+#FINIMAGEN
+# Path del volumen temporal para guardar los reportes y el fichero zip
+# IMPORTANTE: El valor de la clave "mountPath" debe asignarse en el fichero 
+#             application.properties a la variable com.keralty.enviodoc.path-temporal 
+          volumeMounts:
+          - name: temp-storage
+            mountPath: /mnt/temp-storage # Mount path in the container
           ports:
-            - containerPort: 8089
+            - containerPort: 8101
               protocol: TCP
           env:
 # Replace the TZ env variable with your desired timezone. For a list of valid timezones see https://www.iana.org/time-zones
@@ -97,11 +105,20 @@ spec:
               configMapKeyRef:
                 name: ae-config
                 key: ae-enviodoc-url
+          - name: quarkus.rest-client.ae-reportsgenerator.url
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: ae-reportsgenerator-url
 # Set the values below according to your preferences to assign resources to this microservice
           resources:
             limits:
-              cpu: '1'
-              memory: 500Mi
+              cpu: 400m
+              memory: 400Mi
             requests:
               cpu: 10m
-              memory: 250Mi
+              memory: 200Mi
+      volumes:
+      - name: temp-storage
+        emptyDir: {} # This sets up an emptyDir volume
+
