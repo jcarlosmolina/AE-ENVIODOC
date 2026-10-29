@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ae-enviodoc
+  annotations:
+    haproxy.router.openshift.io/timeout: "3m"
+  labels:
+    app: ae-enviodoc
+    app.kubernetes.io/component: ae-enviodoc
+    app.kubernetes.io/instance: ae-enviodoc
+    app.kubernetes.io/name: ae-enviodoc
+    app.kubernetes.io/part-of: ae-app
+    app.openshift.io/runtime: ae-enviodoc
+spec:
+  host: ae-configuraciones-soporte-colsanitas-dev.apps.rm3.7wse.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: ae-enviodoc
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
