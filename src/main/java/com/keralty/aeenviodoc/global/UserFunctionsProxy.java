@@ -24,7 +24,6 @@ import com.keralty.aeenviodoc.persistence.Solicitud;
 import com.keralty.aeenviodoc.persistence.SolicitudNovedad;
 import com.keralty.aeenviodoc.persistence.TipoDireccion;
 import com.keralty.aeenviodoc.persistence.TipoIdentificacion;
-import com.keralty.aeenviodoc.viewmodel.userfunctions.FuActualizarPersonaCORERequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuAnadirTextoRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuBuscarDocGestorNumIdRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuBuscarDocGestorSolicitudRequest;
@@ -40,8 +39,6 @@ import com.keralty.aeenviodoc.viewmodel.userfunctions.FuCheckRegimenSubsidiadoRe
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuconcatenarConNulosRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuContieneCharEspecialRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuContratoExentoDocSolRequest;
-import com.keralty.aeenviodoc.viewmodel.userfunctions.FuCrearPersonaCORERequest;
-import com.keralty.aeenviodoc.viewmodel.userfunctions.FuCrearZipDocumentacionAutoRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuEnviarEmailDevDocRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuEnviarEmailRequest;
 import com.keralty.aeenviodoc.viewmodel.userfunctions.FuEnviarSMSRequest;
@@ -584,42 +581,6 @@ public interface UserFunctionsProxy {
     @Path(value = "/fu_getListaErrores")
     @Produces(MediaType.TEXT_PLAIN)
     public String fugetListaErroresFun(FugetListaErroresRequest request);
-
-    /** 
-     * Method that solves the fuCrearPersonaCORE user function.
-     *
-     * @param request Payload to invoke the REST API of the User Function
-     *
-     * @return Return String value of the User Function
-     */
-    @POST
-    @Path(value = "/fu_CrearPersonaCORE")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String fuCrearPersonaCOREFun(FuCrearPersonaCORERequest request);
-
-    /** 
-     * Method that solves the fuActualizarPersonaCORE user function.
-     *
-     * @param request Payload to invoke the REST API of the User Function
-     *
-     * @return Return String value of the User Function
-     */
-    @POST
-    @Path(value = "/fu_ActualizarPersonaCORE")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String fuActualizarPersonaCOREFun(FuActualizarPersonaCORERequest request);
-
-    /** 
-     * Method that solves the fuCrearZipDocumentacionAuto user function.
-     *
-     * @param request Payload to invoke the REST API of the User Function
-     *
-     * @return Return String value of the User Function
-     */
-    @POST
-    @Path(value = "/fuCrearZipDocumentacionAuto")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String fuCrearZipDocumentacionAutoFun(FuCrearZipDocumentacionAutoRequest request);
 
     /** 
      * Method that solves the fuGetCodTarifaProdPlanAnyo user function.

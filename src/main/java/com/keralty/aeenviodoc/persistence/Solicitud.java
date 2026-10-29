@@ -1475,7 +1475,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvReqCuesMedDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvReqCuesMed");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvReqCuesMed");
         }
         return value;
     }
@@ -1704,7 +1704,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvYaTieneContratanteDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvYaTieneContratante");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvYaTieneContratante");
         }
         return value;
     }
@@ -1723,7 +1723,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvTitularConBeneficiosDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTitularConBeneficios");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTitularConBeneficios");
         }
         return value;
     }
@@ -1868,7 +1868,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvSubtotalDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvSubtotal");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvSubtotal");
         }
         return value;
     }
@@ -1971,7 +1971,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvBaseGrabableDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvBaseGrabable");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvBaseGrabable");
         }
         return value;
     }
@@ -1990,7 +1990,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvPorcenIVADerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvPorcenIVA");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvPorcenIVA");
         }
         return value;
     }
@@ -2009,7 +2009,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvIVADerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvIVA");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvIVA");
         }
         return value;
     }
@@ -2028,7 +2028,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvTotalDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTotal");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTotal");
         }
         return value;
     }
@@ -2341,7 +2341,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvCuesMedOKDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvCuesMedOK");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvCuesMedOK");
         }
         return value;
     }
@@ -2444,7 +2444,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvYaTieneTitularDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvYaTieneTitular");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvYaTieneTitular");
         }
         return value;
     }
@@ -2463,7 +2463,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvDifValorCuotaDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvDifValorCuota");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvDifValorCuota");
         }
         return value;
     }
@@ -2482,7 +2482,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvDifValorDtoFinancieroDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvDifValorDtoFinanciero");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvDifValorDtoFinanciero");
         }
         return value;
     }
@@ -2501,7 +2501,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvDifValorIVADerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvDifValorIVA");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvDifValorIVA");
         }
         return value;
     }
@@ -2520,7 +2520,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvHayPreexistenciasDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvHayPreexistencias");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvHayPreexistencias");
         }
         return value;
     }
@@ -2539,7 +2539,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvContratoLegalizadoDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvContratoLegalizado");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvContratoLegalizado");
         }
         return value;
     }
@@ -2558,7 +2558,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvTieneSegundaFirmaDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTieneSegundaFirma");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTieneSegundaFirma");
         }
         return value;
     }
@@ -2577,7 +2577,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvGrupoAsociadoDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvGrupoAsociado");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvGrupoAsociado");
         }
         return (value == null ? null : value.trim());
     }
@@ -2596,7 +2596,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaDocContratoDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocContrato");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocContrato");
         }
         return value;
     }
@@ -2615,7 +2615,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaDocCartaPreeDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocCartaPree");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocCartaPree");
         }
         return value;
     }
@@ -2634,7 +2634,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaDocBBGestanteDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocBBGestante");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocBBGestante");
         }
         return value;
     }
@@ -2653,7 +2653,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaDocMaternidadDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocMaternidad");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocMaternidad");
         }
         return value;
     }
@@ -2672,7 +2672,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaCuestionarioDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaCuestionario");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaCuestionario");
         }
         return value;
     }
@@ -2691,7 +2691,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAplicaCartaEntDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaCartaEnt");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaCartaEnt");
         }
         return value;
     }
@@ -2836,7 +2836,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvTotalConAnexosDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTotalConAnexos");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTotalConAnexos");
         }
         return value;
     }
@@ -2855,7 +2855,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvContratanteEsTitularDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvContratanteEsTitular");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvContratanteEsTitular");
         }
         return value;
     }
@@ -2874,7 +2874,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvAlgunBeneficiarioEPSSanitasDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAlgunBeneficiarioEPSSanitas");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAlgunBeneficiarioEPSSanitas");
         }
         return value;
     }
@@ -2935,7 +2935,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvListaErroresDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvListaErrores");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvListaErrores");
         }
         return value;
     }
@@ -2996,7 +2996,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvDifValorCuotaBrutaDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvDifValorCuotaBruta");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvDifValorCuotaBruta");
         }
         return value;
     }
@@ -3015,7 +3015,7 @@ La fecha de inicio de contratación, que hasta en momento no admitía valores nu
             value = solicituddrvNumTitularesDerivations();
         } catch (Exception e) {
             value = Long.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvNumTitulares");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvNumTitulares");
         }
         return value;
     }
@@ -3054,7 +3054,7 @@ Para el envío automático de la documentación de una solicitud, esta debe enco
             value = solicituddrvEnviarEmailDocDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvEnviarEmailDoc");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvEnviarEmailDoc");
         }
         return value;
     }
@@ -3073,7 +3073,7 @@ Para el envío automático de la documentación de una solicitud, esta debe enco
             value = solicituddrvAplicaDocNeonatalDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocNeonatal");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocNeonatal");
         }
         return value;
     }
@@ -3134,7 +3134,7 @@ Para el envío automático de la documentación de una solicitud, esta debe enco
             value = solicituddrvAplicaCarnetsDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaCarnets");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaCarnets");
         }
         return value;
     }
@@ -3153,7 +3153,7 @@ Para el envío automático de la documentación de una solicitud, esta debe enco
             value = solicituddrvAplicaDocSolicitudDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocSolicitud");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocSolicitud");
         }
         return value;
     }
@@ -3172,7 +3172,7 @@ Para el envío automático de la documentación de una solicitud, esta debe enco
             value = solicituddrvPuedeReplicarDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvPuedeReplicar");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvPuedeReplicar");
         }
         return value;
     }
@@ -3243,7 +3243,7 @@ Si se cumplen las siguientes condiciones:
             value = solicituddrvCambiarBenefContDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvCambiarBenefCont");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvCambiarBenefCont");
         }
         return value;
     }
@@ -3304,7 +3304,7 @@ Si se cumplen las siguientes condiciones:
             value = solicituddrvEdadTitularDerivations();
         } catch (Exception e) {
             value = Long.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvEdadTitular");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvEdadTitular");
         }
         return value;
     }
@@ -3323,7 +3323,7 @@ Si se cumplen las siguientes condiciones:
             value = solicituddrvGeneroTitularDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvGeneroTitular");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvGeneroTitular");
         }
         return (value == null ? null : value.trim());
     }
@@ -3342,7 +3342,7 @@ Si se cumplen las siguientes condiciones:
             value = solicituddrvTieneTitularDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTieneTitular");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTieneTitular");
         }
         return value;
     }
@@ -3361,7 +3361,7 @@ Si se cumplen las siguientes condiciones:
             value = solicituddrvObservacionesReportDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvObservacionesReport");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvObservacionesReport");
         }
         return value;
     }
@@ -3381,7 +3381,7 @@ Tanto el Plan como el Dominio pueden indicar que se ignoran las preexistencias<b
             value = solicituddrvIgnorarPreexistenciasDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvIgnorarPreexistencias");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvIgnorarPreexistencias");
         }
         return value;
     }
@@ -3400,7 +3400,7 @@ Tanto el Plan como el Dominio pueden indicar que se ignoran las preexistencias<b
             value = solicituddrvTienePrimeraFirmaDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTienePrimeraFirma");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTienePrimeraFirma");
         }
         return value;
     }
@@ -3419,7 +3419,7 @@ Tanto el Plan como el Dominio pueden indicar que se ignoran las preexistencias<b
             value = solicituddrvNumContratoDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvNumContrato");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvNumContrato");
         }
         return (value == null ? null : value.trim());
     }
@@ -3483,7 +3483,7 @@ Para la solicitud es la suma del importe de la tarifa para cada usuario. Si algu
             value = solicituddrvImpTarifaPlanVolDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvImpTarifaPlanVol");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvImpTarifaPlanVol");
         }
         return value;
     }
@@ -3502,7 +3502,7 @@ Para la solicitud es la suma del importe de la tarifa para cada usuario. Si algu
             value = solicituddrvAplicaDocProtDatosDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocProtDatos");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaDocProtDatos");
         }
         return value;
     }
@@ -3563,7 +3563,7 @@ Para la solicitud es la suma del importe de la tarifa para cada usuario. Si algu
             value = solicituddrvPuedeModificarGrupoDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvPuedeModificarGrupo");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvPuedeModificarGrupo");
         }
         return value;
     }
@@ -3678,7 +3678,7 @@ Este atributo almacena el valor del código de factura recibido del CORE. utiliz
             value = solicituddrvAplicaPolizaInternacionalDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAplicaPolizaInternacional");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAplicaPolizaInternacional");
         }
         return value;
     }
@@ -3700,7 +3700,7 @@ Se solicita cambiar el nombre de “Póliza internacional” por “Respaldo glo
             value = solicituddrvPolizaInternacionalDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvPolizaInternacional");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvPolizaInternacional");
         }
         return value;
     }
@@ -3719,7 +3719,7 @@ Se solicita cambiar el nombre de “Póliza internacional” por “Respaldo glo
             value = solicituddrvPermiteRechazadosDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvPermiteRechazados");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvPermiteRechazados");
         }
         return value;
     }
@@ -3738,7 +3738,7 @@ Se solicita cambiar el nombre de “Póliza internacional” por “Respaldo glo
             value = solicituddrvAlgunUsuarioIMCDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvAlgunUsuarioIMC");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvAlgunUsuarioIMC");
         }
         return value;
     }
@@ -3761,7 +3761,7 @@ Una vez que la solicitud se marque como completada, el cálculo del porcentaje d
             value = solicituddrvFechaPorcenIVADerivations();
         } catch (Exception e) {
             value = Date.valueOf(Constants.DATE_DEFAULTVALUE);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvFechaPorcenIVA");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvFechaPorcenIVA");
         }
         return value;
     }
@@ -4288,7 +4288,7 @@ Este derivado sirve para:
             value = solicituddrvSemaforoGrabAseDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvSemaforoGrabAse");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvSemaforoGrabAse");
         }
         return value;
     }
@@ -4311,7 +4311,7 @@ Este derivado sirve para:
             value = solicituddrvSemaforoAreaMedDerivations();
         } catch (Exception e) {
             value = Double.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvSemaforoAreaMed");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvSemaforoAreaMed");
         }
         return value;
     }
@@ -4332,7 +4332,7 @@ Se requiere que el nuevo estado “Recibido” sea homologado en la pantalla de 
             value = solicitudDrvEstadoHomologadoDerivations();
         } catch (Exception e) {
             value = Long.valueOf(0);
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicitudDrvEstadoHomologado");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicitudDrvEstadoHomologado");
         }
         return value;
     }
@@ -4351,7 +4351,7 @@ Se requiere que el nuevo estado “Recibido” sea homologado en la pantalla de 
             value = solicituddrvValidarDatosContratanteDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvValidarDatosContratante");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvValidarDatosContratante");
         }
         return value;
     }
@@ -4412,7 +4412,7 @@ Se requiere que el nuevo estado “Recibido” sea homologado en la pantalla de 
             value = solicituddrvTramitarEnLineaDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Solicitud, Attribute: solicituddrvTramitarEnLinea");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Solicitud, Attribute: solicituddrvTramitarEnLinea");
         }
         return value;
     }
