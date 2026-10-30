@@ -2553,7 +2553,7 @@ public class DominioService extends AbstractService {
         insIncompatiblePreconditions(request);
         Dominio instance = dominioInsIncompatiblepthisDominio;
 
-        instance.add2DominiosIncompatibles(dominioInsIncompatiblepevcDominio);
+        if (isEntryPoint) instance.add2DominiosIncompatibles(dominioInsIncompatiblepevcDominio);
 
 
         response.setInstance(repository.save(instance));
@@ -2649,7 +2649,7 @@ public class DominioService extends AbstractService {
         request.checkArguments();
         Dominio instance = dominioDelIncompatiblepthisDominio;
 
-        instance.removeFromDominiosIncompatibles(dominioDelIncompatiblepevcDominio);
+        if (isEntryPoint) instance.removeFromDominiosIncompatibles(dominioDelIncompatiblepevcDominio);
 
 
         response.setInstance(repository.save(instance));
